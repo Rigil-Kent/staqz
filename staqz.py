@@ -24,7 +24,6 @@ def init_request(url=API_URL):
         print(err)
 
 
-
 def main():
     while True:
         if settings.first_run():

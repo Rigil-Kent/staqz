@@ -22,10 +22,35 @@ def first_run():
         return True
 
 
+def add_url(url):
+    '''Change the API url'''
+    config['api']['url'] = url
+    try:
+        with open(config_file, 'w') as file:
+            config.write(file)
+    except Exception as err:
+        return err
+
+
+
+def add_key(key):
+    '''Change your API key'''
+    config['api']['key'] = key
+    try:
+        with open(config_file, 'w') as file:
+            config.write(file)
+    except Exception as err:
+        return err
+
+
 def generate_configuration():
     if platform.lower() == "windows":
         try:
             check_output(['type NUL > {}'.format(config_file),], shell=True)
+            url = input("Enter the API url: ")
+            add_url(url)
+            key = input("Enter your key: ")
+            add_key(key)
         except Exception as err:
             return err
     elif platform.lower() == "linux":
