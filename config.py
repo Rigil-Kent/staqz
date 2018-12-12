@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 from datetime import datetime
 from os import path
+import json
 import platform
 from subprocess import check_output
 
@@ -9,11 +10,13 @@ config = ConfigParser()
 platform = platform.system()
 config_file = "globals.cfg"
 config.read(config_file)
+
+
 URL = config['api']['url']
 KEY = config['api']['key']
 FUNCTION = config['api']['function']
 TIME_FRAME = datetime.today().strftime('%Y-%m-%d')
-
+PORTFOLIO = config['user']['portfolio']
 
 def first_run():
     if config['first_run'] == 0:
