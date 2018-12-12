@@ -39,4 +39,4 @@ def staqs():
 for symbol in PORTFOLIO:
     print(symbol)
     response = init_request().json()
-    print("Here's how {} did today\n{}".format(response['Meta Data']['2. Symbol'] , response['Time Series (Daily)'][TIME_FRAME]))
+    print("Here's how {} did today:\n{}".format(response['Meta Data']['2. Symbol'] , response['Time Series (Daily)'][TIME_FRAME]))
