@@ -10,7 +10,7 @@ config = ConfigParser()
 platform = platform.system()
 config_file = "globals.cfg"
 config.read(config_file)
-
+FIRST_RUN = int(config['defaults']['first_run'])
 
 URL = config['api']['url']
 KEY = config['api']['key']
@@ -19,7 +19,7 @@ TIME_FRAME = datetime.today().strftime('%Y-%m-%d')
 PORTFOLIO = config['user']['portfolio']
 
 def first_run():
-    if int(config['defaults']['first_run']) == 0:
+    if FIRST_RUN == 0:
         return False
     else:
         return True
@@ -64,6 +64,7 @@ def generate_configuration():
     else:
         print("Sorry. Staqz doesn't support your OS (YET)!")
 
+    config['defaults']['first_run'] = 0
 
 def check_configuration(config_file):
     if (path.isfile(config_file)):
