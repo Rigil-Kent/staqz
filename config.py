@@ -19,7 +19,7 @@ TIME_FRAME = datetime.today().strftime('%Y-%m-%d')
 PORTFOLIO = config['user']['portfolio']
 
 def first_run():
-    if config['first_run'] == 0:
+    if int(config['defaults']['first_run']) == 0:
         return False
     else:
         return True

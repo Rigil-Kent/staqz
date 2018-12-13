@@ -10,21 +10,17 @@ import click
 PORTFOLIO = settings.PORTFOLIO.split(',')
 
 
-def initialize_portfolio():
-    pass
-
-
 def main():
-    while True:
-        if settings.first_run():
-            settings.check_configuration(settings.config_file)
-            print("This is the first run of STAQZ! Congrats!")
+    
+    if settings.first_run():
+        settings.check_configuration(settings.config_file)
+        print("This is the first run of STAQZ! Congrats!")
 
-        pass
+    for symbol in PORTFOLIO:
+        print(Stock(symbol))
 
 
 def staqs():
     pass
 
-for symbol in PORTFOLIO:
-    print(Stock(symbol))
+main()
