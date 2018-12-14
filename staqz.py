@@ -16,6 +16,7 @@ def main():
 
     for symbol in PORTFOLIO:
         print(Stock(symbol))
+        print(Stock(symbol).compare_high())
 
 
 def staqs():
