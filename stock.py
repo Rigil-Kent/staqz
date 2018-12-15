@@ -6,6 +6,7 @@ import config as settings
 
 
 class Stock():
+    TEST_INTERVAL = 60
     SLEEP_INTERVAL = 300
 
 
@@ -32,7 +33,7 @@ class Stock():
 
     def compare_high(self):
         original_value = self.high
-        time.sleep(Stock.SLEEP_INTERVAL)
+        time.sleep(Stock.TEST_INTERVAL)
         updated_value = self.high
 
         if original_value >= updated_value:
@@ -43,10 +44,22 @@ class Stock():
 
     def compare_low(self):
         original_value = self.low
-        time.sleep(Stock.SLEEP_INTERVAL)
+        time.sleep(Stock.TEST_INTERVAL)
         updated_value = self.low
 
         if original_value >= updated_value:
             return "No worthwhile change to report on {}".format(self.symbol)
         else:
             return "Headed to the poor house...Sell!"
+    
+
+    def compare_open_close(self):
+        close_value = self.close
+        open_value = self.open
+
+        if open_value > close_value:
+            pass
+        elif close_value > open_value:
+            pass
+        else:
+            pass
