@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime
+import calendar
 import time
 import config as settings
 
@@ -8,7 +9,7 @@ import config as settings
 class Stock():
     TEST_INTERVAL = 60
     SLEEP_INTERVAL = 300
-
+    TODAY = calendar.day_name[datetime.today().weekday()].lower()
 
     def __init__(self, symbol):
         self.api_url = settings.URL
@@ -30,8 +31,18 @@ class Stock():
     def __repr__(self):
         return "Here's how {} is doing today: \nHigh: {}, Low: {}, Open: {}, Close: {}, Volume: {}".format(self.symbol, self.high, self.low, self.open, self.close, self.volume)
 
+    
+    def market_open(self):
+        if  Stock.TODAY == "saturday" or Stock.TODAY == "sunday":
+            return False
+        else:
+            return True
+
 
     def compare_high(self):
+        if not self.market_open():
+            return "Sorry, the market is closed"
+
         original_value = self.high
         time.sleep(Stock.TEST_INTERVAL)
         updated_value = self.high
@@ -43,6 +54,9 @@ class Stock():
 
 
     def compare_low(self):
+        if not self.market_open():
+            return "Sorry, the market is closed"
+
         original_value = self.low
         time.sleep(Stock.TEST_INTERVAL)
         updated_value = self.low
@@ -54,6 +68,9 @@ class Stock():
     
 
     def compare_open_close(self):
+        if not self.market_open():
+            return "Sorry, the market is closed"
+
         close_value = self.close
         open_value = self.open
 
