@@ -15,7 +15,7 @@ FIRST_RUN = int(config['defaults']['first_run'])
 URL = config['api']['url']
 KEY = config['api']['key']
 FUNCTION = config['api']['function']
-TIME_FRAME = datetime.today().strftime('%Y-%m-%d')
+TIME_FRAME = datetime.today().strftime('%Y-%m-%d %X')
 PORTFOLIO = config['user']['portfolio']
 
 def first_run():
