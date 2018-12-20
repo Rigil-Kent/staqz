@@ -4,25 +4,12 @@ from os import path
 import json
 import platform
 from subprocess import check_output
+import setup as options
 
 
 config = ConfigParser()
 platform = platform.system()
-config_file = "globals.cfg"
-config.read(config_file)
-FIRST_RUN = int(config['defaults']['first_run'])
-
-URL = config['api']['url']
-KEY = config['api']['key']
-FUNCTION = config['api']['function']
-TIME_FRAME = datetime.today().strftime('%Y-%m-%d %X')
-PORTFOLIO = config['user']['portfolio']
-
-def first_run():
-    if FIRST_RUN == 0:
-        return False
-    else:
-        return True
+config_file = options.__config__
 
 
 def add_url(url):
@@ -59,18 +46,24 @@ def generate_configuration():
     elif platform.lower() == "linux":
         try:
             check_output(['touch {}'.format(config_file),], shell=True)
+            url = input("Enter the API url: ")
+            add_url(url)
+            key = input("Enter your key: ")
+            add_key(key)
         except Exception as err:
             return err
     else:
         print("Sorry. Staqz doesn't support your OS (YET)!")
 
-    config['defaults']['first_run'] = 0
+    if config['defaults']['first_run'] == 1:
+        config['defaults']['first_run'] = 0
 
-def check_configuration(config_file):
-    if (path.isfile(config_file)):
-        return
-    else:
-        try:
-            generate_configuration()
-        except Exception as err:
-            return err
+
+config.read(config_file)
+#FIRST_RUN = int(config['defaults']['first_run'])
+
+URL = config['api']['url']
+KEY = config['api']['key']
+FUNCTION = config['api']['function']
+TIME_FRAME = datetime.today().strftime('%Y-%m-%d %X')
+PORTFOLIO = config['user']['portfolio']
