@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import calendar
 import time
 import config as settings
+from decimal import *
 
 
 class Stock():
@@ -22,11 +23,11 @@ class Stock():
         self.intra_response = requests.get("{}/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=1min&apikey={}".format(self.api_url, self.symbol, self.api_key))       
         self.data = self.intra_response.json()
         self.stock_data = next(iter(self.data['Time Series (1min)'].values()))
-        self.open = self.stock_data['1. open'] 
-        self.high = self.stock_data['2. high'] 
-        self.low = self.stock_data['3. low'] 
-        self.close = self.stock_data['4. close']
-        self.volume = self.stock_data['5. volume'] 
+        self.open = float(self.stock_data['1. open'])
+        self.high = float(self.stock_data['2. high'])
+        self.low = float(self.stock_data['3. low'])
+        self.close = float(self.stock_data['4. close'])
+        self.volume = int(self.stock_data['5. volume'])
 
         
     

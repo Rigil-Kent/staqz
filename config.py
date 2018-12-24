@@ -1,6 +1,8 @@
 from configparser import ConfigParser
-from datetime import datetime
+from datetime import datetime, timedelta
+import calendar
 from os import path
+import sys
 import json
 import platform
 from subprocess import check_output
@@ -18,8 +20,18 @@ def add_url(url):
     try:
         with open(config_file, 'w') as file:
             config.write(file)
+
+        sys.stdout.write("""
+        =========================
+        API URL has changed!
+        =========================
+        """)
     except Exception as err:
-        return err
+        raise SystemError("""
+        ========================
+        {}
+        ========================
+        """.format(err))
 
 
 
@@ -29,8 +41,18 @@ def add_key(key):
     try:
         with open(config_file, 'w') as file:
             config.write(file)
+
+        sys.stdout.write("""
+        ====================
+        API key has changed!
+        ====================
+        """)
     except Exception as err:
-        return err
+        raise SystemError("""
+        ====================
+        {}
+        ====================
+        """.format(err))
 
 
 def generate_configuration():
@@ -42,7 +64,11 @@ def generate_configuration():
             key = input("Enter your key: ")
             add_key(key)
         except Exception as err:
-            return err
+            raise SystemError("""
+        ====================
+        {}
+        ====================
+        """.format(err))
     elif platform.lower() == "linux":
         try:
             check_output(['touch {}'.format(config_file),], shell=True)
@@ -51,12 +77,29 @@ def generate_configuration():
             key = input("Enter your key: ")
             add_key(key)
         except Exception as err:
-            return err
+            raise SystemError("""
+        ====================
+        {}
+        ====================
+        """.format(err))
     else:
         print("Sorry. Staqz doesn't support your OS (YET)!")
 
     if config['defaults']['first_run'] == 1:
         config['defaults']['first_run'] = 0
+
+
+def get_prior_byday(dayname, start_date=None):
+    if start_date is None:
+        start_date = datetime.today()
+    
+    day_num = start_date.weekday()
+    day_num_target = calendar.day_name[day_num]
+    days_ago = (7 + day_num - day_num_target) % 7
+    if days_ago == 0:
+        days_ago = 7
+    target_date = start_date - timedelta(days=days_ago)
+    return target_date
 
 
 config.read(config_file)
