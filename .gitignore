@@ -112,3 +112,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.vscode/settings.json
+
+# Configuration files
+globals.cfg
