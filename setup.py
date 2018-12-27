@@ -5,8 +5,8 @@ import os
 import config as settings
 
 
-
 __first_run__ = 1
+
 __py_version__ = sys.version_info[:2]
 __py_required__ = (3, 5)
 if __py_version__ < __py_required__:

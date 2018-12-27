@@ -15,6 +15,14 @@ def main():
 
 
 def staqs():
-    pass
+    if not Stock.market_open():
+        raise SystemExit("""
+            ===========================================
+            Markets are closed today! At ease, soldier!
+            ===========================================
+            """)
+    else:
+        pass
+
 
 main()

@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 import calendar
 import time
 import config as settings
-from decimal import *
 
 
 class Stock():
@@ -12,6 +11,7 @@ class Stock():
     __sleep__ = 300
     __today__ = calendar.day_name[datetime.today().weekday()].lower()
     __offset__ = timedelta(minutes=5)
+
 
     def __init__(self, symbol):
         self.api_url = settings.URL
@@ -29,8 +29,7 @@ class Stock():
         self.close = float(self.stock_data['4. close'])
         self.volume = int(self.stock_data['5. volume'])
 
-        
-    
+            
     def __repr__(self):
         return "Here's how {} is doing today: \nHigh: {}, Low: {}, Open: {}, Close: {}, Volume: {}".format(self.symbol, self.high, self.low, self.open, self.close, self.volume)
 
@@ -40,6 +39,7 @@ class Stock():
             return False
         else:
             return True
+
 
     def get_open(self):
         request = requests.get("{}/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=1min&apikey={}".format(self.api_url, self.symbol, self.api_key))
