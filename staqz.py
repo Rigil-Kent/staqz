@@ -1,7 +1,7 @@
 from os import path
 import config as settings
 from stock import Stock
-import techanalysys
+from techanalysis import techanalysys
 import click
 
 
