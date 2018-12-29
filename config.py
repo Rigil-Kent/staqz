@@ -107,6 +107,6 @@ config.read(config_file)
 
 URL = config['api']['url']
 KEY = config['api']['key']
-FUNCTION = config['api']['function']
+#FUNCTION = config['api']['function']
 TIME_FRAME = datetime.today().strftime('%Y-%m-%d %X')
 PORTFOLIO = config['user']['portfolio']

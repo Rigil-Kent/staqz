@@ -16,7 +16,7 @@ class Stock():
     def __init__(self, symbol):
         self.api_url = settings.URL
         self.api_key = settings.KEY
-        self.function = settings.FUNCTION
+        #self.function = settings.FUNCTION
         self.symbol = symbol
         self.current_time = datetime.today().now() - Stock.__offset__
         #self.response = requests.get("{}/query?function={}&symbol={}&apikey={}".format(self.api_url, self.function, self.symbol, self.api_key ))

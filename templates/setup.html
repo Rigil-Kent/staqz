@@ -9,13 +9,15 @@
 
     <body>
         <div class="jumbotron">
-            <form action="{{url_for('first_run')}}" method="post">
+            <p>Looks like <em>Staqz</em> is missing a configuration file. Please fille out the information below to get your investment journey started!</p>
+            
+            <form action="{{ url_for('thank_you') }}">
                 <label for="key">API Key:</label>
-                <input type="text" name="key">
-                <label for="url">API URL:</label>
-                <input type="text" name="url">
+                <input type="text" name="key" placeholder="0FG8D7GFCCD8G"><br>
+                <label for="url" > API URL:</label>
+                <input type="text" name="url" placeholder="https://somewebsite.com/api"><br>
                 <label for="portfolio">Portfolio</label>
-                <input type="text" name="portfolio">
+                <input type="text" name="portfolio" placeholder="DIS,NOK,S,AMD"><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
