@@ -8,14 +8,17 @@ import config as settings
 from subprocess import check_output
 from config import ConfigParser
 from flask import Flask, render_template, request
+from multiprocessing import Process
 
 
-setup_app = Flask(__name__)
-__description__ = ""
-__first_run__ = 1
-__config__ = "globals.cfg"
 __py_version__ = sys.version_info[:2]
 __py_required__ = (3, 5)
+__description__ = ""
+__first_run__ = False
+__config__ = "globals.cfg"
+__default_API_URI__ = "https://www.alphavantage.co"
+__setup_URI__ = "http://127.0.0.1:5000/setup"
+setup_app = Flask(__name__)
 
 
 if __py_version__ < __py_required__:
@@ -29,7 +32,7 @@ if __py_version__ < __py_required__:
 
 
 def generate_configuration(url, key, portfolio, config_file):
-    if sys.platform.lower() == "windows":
+    if sys.platform.lower() == "win32":
         try:
             check_output(['type NUL > {}'.format(config_file),], shell=True)
         except Exception as msg:
@@ -72,14 +75,25 @@ def generate_configuration(url, key, portfolio, config_file):
         ========================
         """.format(err))
 
+def initialization_complete(func):
+    def close():
+        
+        func()
+        print("{} initialized sucessfully. Exiting.".format(__config__))
+
+        sys.exit()
+
+    if os.path.isfile(__config__):
+        return close
+
 
 @setup_app.route('/setup')
-def first_run():
-    
+def first_run():   
     return render_template("setup.html" )
 
 
 @setup_app.route('/thanks')
+@initialization_complete
 def thank_you():
     url = request.args.get('url')
     key = request.args.get('key')
@@ -94,9 +108,15 @@ def page_not_found(e):
 
 
 if not os.path.isfile(__config__): 
-    # pause the webbrowser.open call long enough to startup Flask - opens in default browser
-    threading.Timer(1.25, lambda: webbrowser.open("http://127.0.0.1:5000/setup")).start()    
-    setup_app.run()
+    server = Process(target=setup_app.run)
+
+    while os.path.isfile(__config__):
+        # pause the webbrowser.open call long enough to startup Flask - opens in default browser
+        threading.Timer(1.25, lambda: webbrowser.open(__setup_URI__)).start()    
+        server.start()
+
+    server.terminate()
+    server.join()
     
 
 '''

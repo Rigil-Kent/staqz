@@ -23,6 +23,7 @@ class Stock():
         self.intra_response = requests.get("{}/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=1min&apikey={}".format(self.api_url, self.symbol, self.api_key))       
         self.data = self.intra_response.json()
         self.stock_data = next(iter(self.data['Time Series (1min)'].values()))
+        self.market_value = ""
         self.open = float(self.stock_data['1. open'])
         self.high = float(self.stock_data['2. high'])
         self.low = float(self.stock_data['3. low'])
@@ -34,6 +35,11 @@ class Stock():
         return "Here's how {} is doing today: \nHigh: {}, Low: {}, Open: {}, Close: {}, Volume: {}".format(self.symbol, self.high, self.low, self.open, self.close, self.volume)
 
     
+    def __isPenny__(self):
+        if self.market_value < 6.0:
+            return True
+
+            
     def market_open(self):
         if  Stock.__today__ == "saturday" or Stock.__today__ == "sunday":
             return False
