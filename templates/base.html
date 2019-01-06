@@ -1,0 +1,11 @@
+{% extends 'bootstrap/base.html' %}
+  {% block title %} Staqz {% endblock %}
+  {% block scripts %} 
+      {{ super() }} 
+      {{ moment.include_moment() }} 
+  {% endblock %}
+  <body>
+    {% include 'nav.html'%}
+    {% block content %}
+    {% endblock %}
+  </body>

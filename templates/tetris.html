@@ -1,0 +1,7 @@
+{% include 'nav.html' %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('templates', filename='tetris.js') }}"></script>
+{% endblock %}
+
+{% include 'footer.html' %}

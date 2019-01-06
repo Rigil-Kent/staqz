@@ -1,0 +1,18 @@
+{% include 'base.html' %}
+{% block title %} <title> ${{ asset }} </title> {% endblock title %}
+{% block content %}
+<div class="container">
+  <h1 class='page-header'>{{ name }} {% if penny %}<span class="badge badge-primary">Penny Stock</span> {% endif %}</h1>
+  <ul>
+    <li> Market Price: {{ price }} </li>
+    <li> Change: {{ change }} ( {{ change_percentage }} ) </li>
+    <li> Volume: {{ volume }} </li>
+    <li> Open: {{ opening }} </li>
+    <li> High: {{ high }} </li>
+    <li> Low: {{ low }} </li>
+    <li> Close: {{ close }} </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% include 'footer.html' %}
