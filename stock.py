@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import datetime
 
 
 __url__ = "https://www.alphavantage.co"
@@ -19,8 +20,23 @@ min_call, day_call = 1, 1
 
 
 def __isPenny__(price):
+    '''Share prices under 5.00 are typically considered penny stocks. Expanded to 5.5'''
     if price <= 5.5:
         return True
+
+
+def __capitalization__(price, volume):
+    '''The Capitalization (market cap) is the value of outstanding shares divided by the price of a single share.'''
+    cap = volume / price
+
+    if cap < 250000000:
+        return 'Micro Cap'
+    elif cap < 1000000000:
+        return "Small Cap"
+    elif cap < 5000000000:
+        return "Mid Cap"
+    else:
+        return "Ultra Cap"
 
 
 def __wait__(minute, day):
@@ -50,10 +66,10 @@ def __alert__(amount):
 
 
 def get_financials(symbol):
-    __wait__(__call_limit_min__, __call_limit_day__)
+    #__wait__(__call_limit_min__, __call_limit_day__)
     request = requests.get("{}/query?function={}&symbol={}&apikey={}".format(__url__,__function__['current'],symbol,__apikey__))
     data = request.json()
-    price, change, volume, opening, high, low, close, change_percent = 0,0,0,0,0,0,0,0
+    
 
     if data['Global Quote']['01. symbol'] == symbol:
         price = float(data['Global Quote']['05. price'])
@@ -71,7 +87,7 @@ def get_financials(symbol):
 
 
 def get_name(symbol):
-    __wait__(__call_limit_min__, __call_limit_day__)
+    #__wait__(__call_limit_min__, __call_limit_day__)
     request =  requests.get("{}/query?function={}&keywords={}&apikey={}".format(__url__, __function__['search'], symbol, __apikey__)) 
     data = request.json()
     if data['bestMatches'][0]['1. symbol'] == symbol:
