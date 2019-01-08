@@ -35,6 +35,13 @@ def asset(asset):
 
     return render_template('stock.html', current_time=datetime.utcnow() , userportfolio=userportfolio, asset=asset, name=name, price=finances[0], change=finances[1], volume=finances[2], opening=finances[3],high=finances[4], low=finances[5], close=finances[6], change_percentage=finances[7], penny=finances[8])
 
+
+@app.route('/user/<username>')
+def user(username):
+
+    return render_template('user.html', username=username)
+
+    
 @app.route('/signup')
 def signup():
     username=None
