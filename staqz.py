@@ -14,6 +14,7 @@ app.config['SECRET_KEY'] = "one ring to rule"
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
+
 class SetupForm(FlaskForm):
     username = StringField('Username: ', validators=[DataRequired()])
     passwd = PasswordField('Password: ', validators=[DataRequired()])
